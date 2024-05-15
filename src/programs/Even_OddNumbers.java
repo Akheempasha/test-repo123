@@ -9,7 +9,10 @@ for(int i=1; i<=10; i++) {
 
 	System.out.println("Print Even Numbers.."+i);
 }
-}
+	else {
+	System.out.println("Print Odd Numbers.."+i);
+	}
+	}
 	}
 
 }
