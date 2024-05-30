@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Scanner_Table {
 
-	public static void main(String[] args) {
+	public static void main(Stringss[] args) {
     	/*Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Table Number");
 		int table = sc.nextInt();
