@@ -1,0 +1,88 @@
+package selenium;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class BrokenLinks_LargeSize {
+
+	public static void main(String[] args) throws Exception, InterruptedException {
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.google.com");
+		driver.manage().window().maximize();
+		
+		TimeUnit.SECONDS.sleep(1);
+		List<WebElement> links =driver.findElements(By.tagName("a"));
+		System.out.println("NUmber of links are.."+links.size());
+		
+		List<String> urlLinks = new ArrayList<String>();
+		
+		for (WebElement e : links) {
+			String url =e.getAttribute("href");
+			//checkBrokenLinks(url);
+			urlLinks.add(url);
+			
+		}
+		
+			
+				long stTime = System.currentTimeMillis();
+				
+				urlLinks.parallelStream().forEach(e->{         // parallel execution   time 10 -sec
+			//	urlLinks.stream().forEach(e->{	               // sequal execution      time 2 - sec
+					try {
+						checkBrokenLinks(e);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
+				
+				long endTime = System.currentTimeMillis();	
+				System.out.println("total time taken.."+(endTime-stTime));
+		
+		
+		driver.quit();
+	}		
+	
+	
+	
+	public static void checkBrokenLinks(String linkUrl) throws IOException {
+		
+		
+		try {
+			URL url = new URI(linkUrl).toURL();
+			HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+			//urlConnection.setConnectTimeout(5000);
+			urlConnection.connect();
+			
+			if(urlConnection.getResponseCode() >= 400) {
+				System.err.println(linkUrl + "--->"+ urlConnection.getResponseMessage() + "is a broken link");
+			}
+			else {
+				System.out.println(linkUrl + "--->"+ urlConnection.getResponseCode());
+			}
+
+		}
+		catch (MalformedURLException | URISyntaxException e) {
+			 
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	}
+
+}
