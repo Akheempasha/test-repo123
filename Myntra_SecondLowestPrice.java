@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Myntra_SecondLowestPrice {
 	public static WebDriver driver;
 	public static int secoundlowestprice;
+
 	public static void main(String[] args) throws Exception {
 		ChromeOptions option = new ChromeOptions();
 		option.addArguments("--disable-notifications");
