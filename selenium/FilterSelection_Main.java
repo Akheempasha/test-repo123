@@ -21,7 +21,7 @@ public class FilterSelection_Main {
 		FilterSelection filter = new FilterSelection(driver);
 	//	filter.selectFilter("Network speed","4G LTE","4G","5G");
 	//	filter.selectFilter("SIM type", "eSIM");
-		filter.selectFilter("Deals");
+		filter.selectFilter("Deals","all");
 		
 		System.out.println("Successful Clicked");
 
